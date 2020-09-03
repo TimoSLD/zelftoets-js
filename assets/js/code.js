@@ -1,24 +1,38 @@
-$(document).ready(function(){
-    animateDiv('.a');
-});
+var hits = 0;
+var misses = 0;
+var score = 0
+var scoretext = document.getElementById("score");
+var duck = document.getElementById('duck');
+var hitstext = document.getElementById("hits");
+var background = document.getElementById('body');
+var missestext = document.getElementById("misses");
+var winlosttext = document.getElementById("win-lost");
+var total = hits + misses;
+var winLost = hits - misses;
 
-function makeNewPosition(){
-    
-    // Get viewport dimensions (remove the dimension of the div)
-    var h = $(window).height() - 50;
-    var w = $(window).width() - 50;
-    
-    var nh = Math.floor(Math.random() * h);
-    var nw = Math.floor(Math.random() * w);
-    
-    return [nh,nw];    
-    
+duck.onclick = function() {
+   console.log(++hits);
+   console.log(--misses);
+   hitstext.innerHTML = "je hebt " + hits + " x gehit!";
+   if(hits === 20){
+       alert("je hebt gewonnen!");
+       score++
+       scoretext.innerHTML = "score: " + score;
+       hits = 0;
+       misses = 0;
+       return hits, misses;
+   }
 }
 
-function animateDiv(myclass){
-    var newq = makeNewPosition();
-    $(myclass).animate({ top: newq[0], left: newq[1] }, 1000,   function(){
-      animateDiv(myclass);        
-    });
-    
-};
+background.onclick = function() {
+    console.log(++misses);
+    missestext.innerHTML = "je hebt " + misses + " x gemist!";
+    if(misses === 20){
+        alert("je hebt verloren :(");
+        score--
+        scoretext.innerHTML = "score: " + score;
+        hits = 0;
+        misses = -0;
+        return hits, misses;
+    }
+}
